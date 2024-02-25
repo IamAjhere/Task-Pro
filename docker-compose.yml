@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  mariaDB:
+    container_name: Java-TaskManager
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_DATABASE: JavaTaskManager
+      MARIADB_ROOT_PASSWORD: password
