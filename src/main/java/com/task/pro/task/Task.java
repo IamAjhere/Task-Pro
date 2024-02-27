@@ -1,5 +1,6 @@
 package com.task.pro.task;
 
+import com.task.pro.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -9,24 +10,17 @@ import java.time.LocalDateTime;
 
 public class Task  {
     @Id
-    @SequenceGenerator(
-            name = "task_sequence",
-            sequenceName = "task_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "task_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String taskName;
     private TaskPriority taskPriority;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
-    private String createdBy;
+    private LocalDateTime createdAtDate;
+    private LocalDateTime updatedAtDate;
     private LocalDateTime dueDate;
     private Boolean markedAsComplete = false;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User createdBy;
     public enum TaskPriority {
         HIGH,
         MEDIUM,
@@ -36,35 +30,28 @@ public class Task  {
     public Task() {
     }
 
-    public Task(Long id,
-                String taskName,
-                TaskPriority taskPriority,
-                LocalDateTime createdDate,
-                LocalDateTime updatedDate,
-                String createdBy,
-                LocalDateTime dueDate,
-                Boolean markedAsComplete) {
+    public Task(Long id, String taskName, TaskPriority taskPriority, LocalDateTime createdAtDate, LocalDateTime updatedAtDate, LocalDateTime dueDate, Boolean markedAsComplete, User createdBy) {
         this.id = id;
         this.taskName = taskName;
         this.taskPriority = taskPriority;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-        this.createdBy = createdBy;
+        this.createdAtDate = createdAtDate;
+        this.updatedAtDate = updatedAtDate;
         this.dueDate = dueDate;
         this.markedAsComplete = markedAsComplete;
+        this.createdBy = createdBy;
     }
 
     public Task(String taskName,
                 TaskPriority taskPriority,
-                LocalDateTime createdDate,
+                LocalDateTime createdAtDate,
                 LocalDateTime updatedDate,
-                String createdBy,
+                User createdBy,
                 LocalDateTime dueDate,
                 Boolean markedAsComplete) {
         this.taskName = taskName;
         this.taskPriority = taskPriority;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
+        this.createdAtDate = createdAtDate;
+        this.updatedAtDate = updatedDate;
         this.createdBy = createdBy;
         this.dueDate = dueDate;
         this.markedAsComplete = markedAsComplete;
@@ -94,27 +81,27 @@ public class Task  {
         this.taskPriority = taskPriority;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedAtDate() {
+        return createdAtDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAtDate(LocalDateTime createdAtDate) {
+        this.createdAtDate = createdAtDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
+    public LocalDateTime getUpdatedAtDate() {
+        return updatedAtDate;
     }
 
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setUpdatedAtDate(LocalDateTime updatedAtDate) {
+        this.updatedAtDate = updatedAtDate;
     }
 
-    public String getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -140,8 +127,8 @@ public class Task  {
                 "id=" + id +
                 ", taskName='" + taskName + '\'' +
                 ", taskPriority=" + taskPriority +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
+                ", createdDate=" + createdAtDate +
+                ", updatedDate=" + updatedAtDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", dueDate=" + dueDate +
                 ", markedAsComplete=" + markedAsComplete +
