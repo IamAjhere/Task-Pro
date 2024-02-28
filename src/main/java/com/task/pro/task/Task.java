@@ -13,6 +13,7 @@ public class Task  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String taskName;
+    @Enumerated(value = EnumType.STRING)
     private TaskPriority taskPriority;
     private LocalDateTime createdAtDate;
     private LocalDateTime updatedAtDate;
@@ -21,11 +22,7 @@ public class Task  {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
-    public enum TaskPriority {
-        HIGH,
-        MEDIUM,
-        LOW
-    }
+
 
     public Task() {
     }

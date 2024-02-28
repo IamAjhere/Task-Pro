@@ -41,7 +41,7 @@ public class TaskConfig {
 
             Task task1 = new Task(
                     "Task 1",
-                    Task.TaskPriority.HIGH,
+                    TaskPriority.HIGH,
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now().minusDays(2),
                     user1,
@@ -51,7 +51,7 @@ public class TaskConfig {
 
             Task task2 = new Task(
                     "Task 2",
-                    Task.TaskPriority.MEDIUM,
+                    TaskPriority.MEDIUM,
                     LocalDateTime.now().minusDays(5),
                     LocalDateTime.now().minusDays(4),
                     user2,
@@ -60,7 +60,7 @@ public class TaskConfig {
             );
             Task task3 = new Task(
                     "Task 3",
-                    Task.TaskPriority.LOW,
+                    TaskPriority.LOW,
                     LocalDateTime.now().minusDays(5),
                     LocalDateTime.now().minusDays(4),
                     user2,
