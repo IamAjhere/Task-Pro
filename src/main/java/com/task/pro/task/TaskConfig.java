@@ -1,5 +1,3 @@
-// TaskConfig.java
-
 package com.task.pro.task;
 
 import com.task.pro.user.User;
@@ -17,60 +15,57 @@ public class TaskConfig {
     @Bean
     CommandLineRunner taskCommandLineRunner(TaskRepository taskRepository, UserRepository userRepository) {
         return args -> {
-            User user1 = new User(
-                    "John",
-                    "Doe",
-                    "john.doe@example.com",
-                    "password",
-                    LocalDateTime.now().minusDays(3),
-                    LocalDateTime.now().minusDays(2)
-            );
+            User user1 = User.builder()
+                    .firstName("John")
+                    .lastName("Doe")
+                    .email("john.doe@example.com")
+                    .password("password")
+                    .createdAt(LocalDateTime.now().minusDays(3))
+                    .updatedAt(LocalDateTime.now().minusDays(2))
+                    .build();
 
-            User user2 = new User(
-                    "Jane",
-                    "Doe",
-                    "jane.doe@example.com",
-                    "password",
-                    LocalDateTime.now().minusDays(5),
-                    LocalDateTime.now().minusDays(4)
-            );
+            User user2 = User.builder()
+                    .firstName("Jane")
+                    .lastName("Doe")
+                    .email("jane.doe@example.com")
+                    .password("password")
+                    .createdAt(LocalDateTime.now().minusDays(5))
+                    .updatedAt(LocalDateTime.now().minusDays(4))
+                    .build();
 
-            userRepository.saveAll(
-                    List.of(user1, user2)
-            );
+            userRepository.saveAll(List.of(user1, user2));
 
-            Task task1 = new Task(
-                    "Task 1",
-                    TaskPriority.HIGH,
-                    LocalDateTime.now().minusDays(3),
-                    LocalDateTime.now().minusDays(2),
-                    user1,
-                    LocalDateTime.now().plusDays(7),
-                    false
-            );
+            Task task1 = Task.builder()
+                    .taskName("Task 1")
+                    .taskPriority(TaskPriority.HIGH)
+                    .createdAt(LocalDateTime.now().minusDays(3))
+                    .updatedAt(LocalDateTime.now().minusDays(2))
+                    .createdBy(user1)
+                    .dueDate(LocalDateTime.now().plusDays(7))
+                    .markedAsComplete(false)
+                    .build();
 
-            Task task2 = new Task(
-                    "Task 2",
-                    TaskPriority.MEDIUM,
-                    LocalDateTime.now().minusDays(5),
-                    LocalDateTime.now().minusDays(4),
-                    user2,
-                    LocalDateTime.now().plusDays(5),
-                    true
-            );
-            Task task3 = new Task(
-                    "Task 3",
-                    TaskPriority.LOW,
-                    LocalDateTime.now().minusDays(5),
-                    LocalDateTime.now().minusDays(4),
-                    user2,
-                    LocalDateTime.now().plusDays(5),
-                    true
-            );
+            Task task2 = Task.builder()
+                    .taskName("Task 2")
+                    .taskPriority(TaskPriority.MEDIUM)
+                    .createdAt(LocalDateTime.now().minusDays(5))
+                    .updatedAt(LocalDateTime.now().minusDays(4))
+                    .createdBy(user2)
+                    .dueDate(LocalDateTime.now().plusDays(5))
+                    .markedAsComplete(true)
+                    .build();
 
-            taskRepository.saveAll(
-                    List.of(task1, task2,task3)
-            );
+            Task task3 = Task.builder()
+                    .taskName("Task 3")
+                    .taskPriority(TaskPriority.LOW)
+                    .createdAt(LocalDateTime.now().minusDays(5))
+                    .updatedAt(LocalDateTime.now().minusDays(4))
+                    .createdBy(user2)
+                    .dueDate(LocalDateTime.now().plusDays(5))
+                    .markedAsComplete(true)
+                    .build();
+
+            taskRepository.saveAll(List.of(task1, task2, task3));
         };
     }
 }
