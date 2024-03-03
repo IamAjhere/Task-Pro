@@ -28,6 +28,20 @@ Before running the application, ensure that you have the following installed:
    docker-compose up -d
 This command will start a local MariaDB container using the provided docker-compose.yml file.
 
+3. Configure JWT Secret
+
+In order to secure your application, you need to create a `secret.properties` file in the `src/main/resources` folder. This file will contain the JWT secret key for encryption.
+
+* Create a new file named `secret.properties` in the `src/main/resources` folder.
+* Open the `secret.properties` file and add the following line, replacing `<your_hex_encoded_secret>` with your actual 256-bit hex-encoded secret:
+
+    ```properties
+    secret.JwtSecret=<your_hex_encoded_secret>
+    ```
+
+   Example:
+   ```properties
+   secret.JwtSecret=2a5f1c3e6a907d4b60f54a8d3f6e12b9...
 ## Running the Application
 Once MariaDB is set up and configured, you can run the Task Pro application using the following steps:
 
