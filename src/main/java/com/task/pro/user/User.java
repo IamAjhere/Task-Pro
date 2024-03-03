@@ -1,5 +1,6 @@
 package com.task.pro.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.task.pro.task.Task;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -27,40 +29,41 @@ public class User implements UserDetails {
     private String lastName;
     private  String email;
     private String password;
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Role role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Task> tasks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
     @Override
     public String getUsername() {
-        return null;
+        return email; 
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return false;
+    public boolean isAccountNonLocked() {  
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
