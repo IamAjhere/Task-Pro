@@ -1,4 +1,4 @@
-package com.task.pro.Authentication;
+package com.task.pro.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
