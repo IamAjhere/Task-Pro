@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum CustomExceptionStore {
     USER_EXISTS("USER_EXISTS", "User Already Exists", HttpStatus.CONFLICT.value()),
+    USER_NOT_FOUND("USER_NOT_EXISTS", "User not Found.", HttpStatus.NOT_FOUND.value()),
     INVALID_LOGIN("INVALID_LOGIN_CREDENTIALS", "Invalid Email or Password", HttpStatus.NOT_FOUND.value());
 
     private final String code;
@@ -18,5 +19,5 @@ public enum CustomExceptionStore {
         this.statusCode = statusCode;
     }
 
-    }
+}
 

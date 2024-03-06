@@ -1,6 +1,5 @@
 package com.task.pro.task;
 
-import com.task.pro.config.SecretConfiguration;
 import com.task.pro.user.Role;
 import com.task.pro.user.User;
 import com.task.pro.user.UserRepository;
