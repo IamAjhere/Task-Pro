@@ -30,15 +30,12 @@ public class AuthenticationService {
         checkIfAlreadyExist.ifPresent(user -> {
             throw new CustomException(CustomExceptionStore.USER_EXISTS);
         });
-
-        // TODO: check for valid strong password
-        // TODO: update role based on user input
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.INDIVIDUAL)
+                .role(request.getRole())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

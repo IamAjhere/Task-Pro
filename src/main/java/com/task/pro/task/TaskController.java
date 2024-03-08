@@ -27,6 +27,5 @@ public class TaskController {
         logger.info("Received request to get tasks");
         List<Task> tasks = taskService.getTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
-
     }
 }
