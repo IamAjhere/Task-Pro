@@ -12,8 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Builder
@@ -40,7 +39,27 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        Map<Role, List<String>> roleAuthoritiesMap = Map.of(
+                Role.INDIVIDUAL, Arrays.asList(
+                        "TASK", "TASK:ADD", "TASK:VIEW", "TASK:DELETE", "TASK:UPDATE"
+                ),
+                Role.TEAM_MEMBER, Arrays.asList(
+                        "TASK", "TASK:VIEW", "TASK:UPDATE"
+                ),
+                Role.TEAM_OWNER, Arrays.asList(
+                        "TASK", "TASK:ADD", "TASK:VIEW", "TASK:DELETE", "TASK:UPDATE",
+                        "TEAM_MEMBER", "TEAM_MEMBER:ADD", "TEAM_MEMBER:VIEW", "TEAM_MEMBER:DELETE", "TEAM_MEMBER:UPDATE"
+                )
+        );
+        // Get the authorities based on the user's role
+        List<String> roleAuthorities = roleAuthoritiesMap.get(role);
+        if (roleAuthorities != null) {
+            roleAuthorities.forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority)));
+        }
+
+        return authorities;
     }
     @Override
     public String getUsername() {

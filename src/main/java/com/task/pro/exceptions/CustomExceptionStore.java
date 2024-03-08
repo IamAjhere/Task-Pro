@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 public enum CustomExceptionStore {
     USER_EXISTS("USER_EXISTS", "User Already Exists", HttpStatus.CONFLICT.value()),
     USER_NOT_FOUND("USER_NOT_EXISTS", "User not Found.", HttpStatus.NOT_FOUND.value()),
-    INVALID_LOGIN("INVALID_LOGIN_CREDENTIALS", "Invalid Email or Password", HttpStatus.NOT_FOUND.value());
+    INVALID_LOGIN("INVALID_LOGIN_CREDENTIALS", "Invalid Email or Password", HttpStatus.NOT_FOUND.value()),
+    TEAM_MEMBER_NOT_ALLOWED("TEAM_MEMBER_NOT_ALLOWED", "Team Member is Not Allowed.", HttpStatus.UNAUTHORIZED.value());
+
 
     private final String code;
     private final String message;

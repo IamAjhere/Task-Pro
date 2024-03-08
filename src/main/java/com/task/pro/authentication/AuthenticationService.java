@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,10 @@ public class AuthenticationService {
         checkIfAlreadyExist.ifPresent(user -> {
             throw new CustomException(CustomExceptionStore.USER_EXISTS);
         });
+        //Return Error if Team Member role is selected
+        if (request.getRole() == Role.TEAM_MEMBER) {
+            throw new CustomException(CustomExceptionStore.TEAM_MEMBER_NOT_ALLOWED);
+        }
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -40,11 +45,19 @@ public class AuthenticationService {
                 .updatedAt(LocalDateTime.now())
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = getJwtToken(user);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    private String getJwtToken(User user) {
+        return jwtService.generateToken(Map.of(
+                "userId", user.getId(),
+                "email", user.getEmail(),
+                "userType", user.getRole()
+        ), user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -59,7 +72,7 @@ public class AuthenticationService {
         }
 
         var user = repository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not Found"));
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = getJwtToken(user);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
