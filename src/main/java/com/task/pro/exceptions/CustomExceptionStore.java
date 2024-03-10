@@ -20,6 +20,31 @@ public enum CustomExceptionStore {
         this.message = message;
         this.statusCode = statusCode;
     }
+    public static String getMessage(String code) {
+        for (CustomExceptionStore exception : values()) {
+            if (exception.code.equals(code)) {
+                return exception.message;
+            }
+        }
+        return null;
+    }
 
+    public static String getCode(String message) {
+        for (CustomExceptionStore exception : values()) {
+            if (exception.message.equals(message)) {
+                return exception.code;
+            }
+        }
+        return null;
+    }
+
+    public static int getStatusCode(String code) {
+        for (CustomExceptionStore exception : values()) {
+            if (exception.code.equals(code)) {
+                return exception.statusCode;
+            }
+        }
+        return 0;
+    }
 }
 

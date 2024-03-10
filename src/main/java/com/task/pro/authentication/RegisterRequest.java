@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Validated
