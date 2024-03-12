@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment: Production
     steps:
       - uses: actions/checkout@v3
 
@@ -37,7 +37,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Create secret.properties in src/main/resources directory
-        run: echo "secret.JwtSecret = ${{ secrets.JwtSecret }}" > src/main/resources/secret.properties
+        run: echo "secret.JwtSecret = ${{ secrets.JWT_SECRET }}" > src/main/resources/secret.properties
       # Add a step to build with Maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
