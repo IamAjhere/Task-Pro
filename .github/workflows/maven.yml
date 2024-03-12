@@ -36,6 +36,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Create secret.properties in src/main/resources directory
+        run: echo "secret.JwtSecret = ${{ secrets.JwtSecret }}" > src/main/resources/secret.properties
       # Add a step to build with Maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
