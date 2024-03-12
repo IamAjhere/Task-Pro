@@ -34,7 +34,7 @@ public class AuthenticationControllerTest {
     @Test
     @Transactional
     public void authenticationController_Register_ValidRegister() throws Exception {
-        RegisterRequest validRequest = new RegisterRequest("John", "Doe", "john.doe@example.com", Role.INDIVIDUAL, "Password@123");
+        RegisterRequest validRequest = new RegisterRequest("John", "Doe", "john.doe@example.com", Role.INDIVIDUAL, "weeak");
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/register")
                         .content(objectMapper.writeValueAsString(validRequest))
                         .contentType(MediaType.APPLICATION_JSON))
