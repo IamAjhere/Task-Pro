@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskCreateRequest {
+public class TaskUpdateRequest {
 
     @NotBlank(message = "Task name cannot be blank")
     private String taskName;
@@ -23,4 +23,6 @@ public class TaskCreateRequest {
 
     @Future(message = "Task due date cannot be in the past")
     private LocalDateTime dueDate;
+
+    private boolean markedAsComplete = false;
 }
