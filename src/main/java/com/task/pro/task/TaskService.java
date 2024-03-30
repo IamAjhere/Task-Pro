@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +23,6 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final AuthorizationService authorizationService;
-
     private final UserService userService;
     @Autowired
     public TaskService(TaskRepository taskRepository, AuthorizationService authorizationService, UserService userService) {
@@ -58,17 +56,12 @@ public class TaskService {
         Task task;
         try {
             userId = authorizationService.getCurrentUserId();
-            task = taskRepository.findByCreatedBy_IdAndId(userId, id)
-                    .orElseThrow(() -> new CustomException(CustomExceptionStore.TASK_NOT_FOUND));
         } catch (Exception ex) {
             throw new CustomException(CustomExceptionStore.AUTHORIZATION_FAILED);
         }
-
-        if (task != null) {
-            return task;
-        } else {
-            throw new CustomException(CustomExceptionStore.TASK_NOT_FOUND);
-        }
+        task = taskRepository.findByCreatedBy_IdAndId(userId, id)
+                .orElseThrow(() -> new CustomException(CustomExceptionStore.TASK_NOT_FOUND));
+        return task;
     }
     @Transactional
     public Task createTask(TaskCreateRequest taskRequest) {
@@ -106,12 +99,11 @@ public class TaskService {
         Task task;
         try {
             userId = authorizationService.getCurrentUserId();
-            task = taskRepository.findByCreatedBy_IdAndId(userId, id)
-                    .orElseThrow(() -> new CustomException(CustomExceptionStore.TASK_NOT_FOUND));
         } catch (Exception ex) {
             throw new CustomException(CustomExceptionStore.AUTHORIZATION_FAILED);
         }
-
+        task = taskRepository.findByCreatedBy_IdAndId(userId, id)
+                .orElseThrow(() -> new CustomException(CustomExceptionStore.TASK_NOT_FOUND));
         try {
             taskRepository.delete(task);
         } catch (Exception ex) {
@@ -144,7 +136,12 @@ public class TaskService {
         }
 
         task.setMarkedAsComplete(taskUpdateRequest.isMarkedAsComplete());
-
-        return taskRepository.save(task);
+        try{
+            task =  taskRepository.save(task);
+        }
+        catch (Exception ex){
+            throw new CustomException(CustomExceptionStore.TASK_UPDATE_FAILED);
+        }
+        return task;
     }
 }
