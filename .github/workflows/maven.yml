@@ -33,7 +33,7 @@ jobs:
             echo "secret.JwtSecret = ${{ secrets.JWT_SECRET }}" > src/main/resources/secret.properties
             echo "spring.datasource.url=jdbc:mariadb://${{ secrets.DB_URL }}:3306/TaskPro" >> src/main/resources/secret.properties
             echo "spring.datasource.username=admin" >> src/main/resources/secret.properties
-            echo "spring.datasource.password=${{ secrets.DB_PASSWORD }" >> src/main/resources/secret.properties
+            echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> src/main/resources/secret.properties
 
       # Add a step to build with Maven
       - name: Build with Maven
