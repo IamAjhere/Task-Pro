@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.task.pro</groupId>
 	<artifactId>taskpro</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Task Pro</name>
 	<description>Task Pro empowers users to seamlessly organize, prioritize, and track their tasks with ease.</description>
 	<properties>
